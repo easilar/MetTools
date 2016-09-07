@@ -25,7 +25,7 @@ process.TFileService = cms.Service("TFileService", fileName = cms.string("histo_
 
 process.load('Configuration.StandardSequences.Services_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
-process.GlobalTag.globaltag = '80X_dataRun2_Prompt_v8'
+process.GlobalTag.globaltag = '80X_dataRun2_Prompt_v9'
 
 process.load('MetTools.MetPhiCorrections.phiCorr_80X_cff')
 #Replacements for mAOD
