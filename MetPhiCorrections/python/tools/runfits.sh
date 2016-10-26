@@ -22,9 +22,9 @@
 #./fits.sh Data_D_80X "/afs/hephy.at/data/easilar01/MET/METPhiCorr/Data/Run2016D/all_D.root"  "/afs/hephy.at/user/e/easilar/www/METPhiCorr/Data_80X/D_fix_GT/" sumPt
 #./fits.sh Data_E_80X "/afs/hephy.at/data/easilar01/MET/METPhiCorr/Data/Run2016E/all_E.root"  "/afs/hephy.at/user/e/easilar/www/METPhiCorr/Data_80X/E_fix_GT/" sumPt
 #./fits.sh Data_F_80X "/afs/hephy.at/data/easilar01/MET/METPhiCorr/Data/Run2016F/all_F.root"  "/afs/hephy.at/user/e/easilar/www/METPhiCorr/Data_80X/F_fix_GT/" sumPt
-#./fits.sh Data_G_80X "/afs/hephy.at/data/easilar01/MET/METPhiCorr/Data/Run2016G/all_G.root"  "/afs/hephy.at/user/e/easilar/www/METPhiCorr/Data_80X/G_fix_GT/" sumPt
+./fits.sh Data_G_80X "/afs/hephy.at/data/easilar01/MET/METPhiCorr/Data/Run2016G/lumi_updated/all_G.root"  "/afs/hephy.at/user/e/easilar/www/METPhiCorr/Data_80X/G_fix_GT_lumi_Updated/" sumPt
 
 #./fits.sh MC_DY_80X "/afs/hephy.at/data/easilar01/MET/METPhiCorr/MC/80X/DY/all_DY.root"  "/afs/hephy.at/user/e/easilar/www/METPhiCorr/MC_80X/DY/" sumPt
 #./fits.sh MC_TTJets_80X "/afs/hephy.at/data/easilar01/MET/METPhiCorr/MC/80X/TTJets/all_TTJets.root"  "/afs/hephy.at/user/e/easilar/www/METPhiCorr/MC_80X/TTJets/" sumPt
-./fits.sh MC_WJets_80X "/afs/hephy.at/data/easilar01/MET/METPhiCorr/MC/80X/WJets/all_WJets.root"  "/afs/hephy.at/user/e/easilar/www/METPhiCorr/MC_80X/WJets/" sumPt
+#./fits.sh MC_WJets_80X "/afs/hephy.at/data/easilar01/MET/METPhiCorr/MC/80X/WJets/all_WJets.root"  "/afs/hephy.at/user/e/easilar/www/METPhiCorr/MC_80X/WJets/" sumPt
 
