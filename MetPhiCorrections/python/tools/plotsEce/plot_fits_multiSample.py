@@ -7,21 +7,21 @@ plot_vars = ["hHFPlus", "hHFMinus","egammaHFPlus" , "egammaHFMinus","hEtaPlus" ,
 #plot_vars = ["h0Barrel","h0EndcapPlus","h0EndcapMinus"]
 p_vars = ["x","y"]
 #p_vars = ["y"]
-h_var = "multiplicity" #sumPt , ngoodVertices
-##h_var = "sumPt"
-file_var = "mult" # sumPt 
-#file_var = "sumPt" 
-axis_var = "multiplicity"
-#axis_var = "#Sigma p_{T}"
+#h_var = "multiplicity" #sumPt , ngoodVertices
+h_var = "sumPt"
+#file_var = "mult" # sumPt 
+file_var = "sumPt" 
+#axis_var = "multiplicity"
+axis_var = "#Sigma p_{T}"
 #axis_var = "ngoodVertices"
 for p_var in p_vars:
   for var in plot_vars:
     print "Now: " , var , " P" , p_var  
     #DY_file     = ROOT.TFile("/afs/hephy.at/user/e/easilar/www/METPhiCorr/DY_Fall15/"+var+"_"+file_var+".root")
-    DY_file     = ROOT.TFile("/afs/hephy.at/user/e/easilar/www/METPhiCorr/MC_80X/"+var+"_"+file_var+".root")
-    Data_file    = ROOT.TFile("/afs/hephy.at/user/e/easilar/www/METPhiCorr/Data_80X/onZ_10Aug/"+var+"_"+file_var+".root")
-    #TTJets_file = ROOT.TFile("/afs/hephy.at/user/e/easilar/www/METPhiCorr/TTJets_Spring15/"+var+"_"+file_var+".root")
-    #WJets_file  = ROOT.TFile("/afs/hephy.at/user/e/easilar/www/METPhiCorr/WJets_Spring15/"+var+"_"+file_var+".root")
+    DY_file     = ROOT.TFile("/afs/hephy.at/user/e/easilar/www/METPhiCorr/MCMoriond2017_8025/DY/"+var+"_"+file_var+".root")
+    TTJets_file = ROOT.TFile("/afs/hephy.at/user/e/easilar/www/METPhiCorr/MCMoriond2017_8025/TTJets/"+var+"_"+file_var+".root")
+    WJets_file  = ROOT.TFile("/afs/hephy.at/user/e/easilar/www/METPhiCorr/MCMoriond2017_8025/WJets/"+var+"_"+file_var+".root")
+    #Data_file    = ROOT.TFile("/afs/hephy.at/user/e/easilar/www/METPhiCorr/Data_80X/onZ_10Aug/"+var+"_"+file_var+".root")
 
     #TTJets_fall_file = ROOT.TFile("/afs/hephy.at/user/e/easilar/www/METPhiCorr/TTJets_Fall15/"+var+"_"+file_var+".root")
     #WJets_fall_file  = ROOT.TFile("/afs/hephy.at/user/e/easilar/www/METPhiCorr/WJets_Fall15/"+var+"_"+file_var+".root")
@@ -29,31 +29,31 @@ for p_var in p_vars:
     #var = var.split("_")
     #var = var[0]+var[1]+var[2]
     c_dy = DY_file.Get('c1_n2')
-    #c_tt = TTJets_file.Get('c1_n2')
-    #c_w  = WJets_file.Get('c1_n2')
-    c_data = Data_file.Get('c1_n2')
+    c_tt = TTJets_file.Get('c1_n2')
+    c_w  = WJets_file.Get('c1_n2')
+    #c_data = Data_file.Get('c1_n2')
 
     #c_tt_f = TTJets_fall_file.Get('c1_n2')
     #c_w_f  = WJets_fall_file.Get('c1_n2')
     print "metPhiCorrInfoWriter_"+h_var+"_"+var+"_P"+p_var
     h_dy = c_dy.GetPrimitive("metPhiCorrInfoWriter_"+h_var+"_"+var+"_P"+p_var)
-    #h_tt = c_tt.GetPrimitive("metPhiCorrInfoWriter_"+h_var+"_"+var+"_P"+p_var)
-    #h_w  = c_w.GetPrimitive("metPhiCorrInfoWriter_"+h_var+"_"+var+"_P"+p_var)
+    h_tt = c_tt.GetPrimitive("metPhiCorrInfoWriter_"+h_var+"_"+var+"_P"+p_var)
+    h_w  = c_w.GetPrimitive("metPhiCorrInfoWriter_"+h_var+"_"+var+"_P"+p_var)
     #h_tt_f = c_tt_f.GetPrimitive("metPhiCorrInfoWriter_"+h_var+"_"+var+"_P"+p_var)
     #h_w_f  = c_w_f.GetPrimitive("metPhiCorrInfoWriter_"+h_var+"_"+var+"_P"+p_var)
-    h_data  = c_data.GetPrimitive("metPhiCorrInfoWriter_"+h_var+"_"+var+"_P"+p_var)
+    #h_data  = c_data.GetPrimitive("metPhiCorrInfoWriter_"+h_var+"_"+var+"_P"+p_var)
     #print h_tt_f , "we have tt fall" 
 
     histo_list = [\
     #{"histo":h_dy,    "name":"DY Fall15",      "line":2,"color":ROOT.kBlue},\
-    {"histo":h_dy,    "name":"DY Spring16",      "line":2,"color":ROOT.kBlue},\
-    #{"histo":h_tt,    "name":"TTJets Spring15","line":2,"color":ROOT.kRed},\
+    {"histo":h_dy,    "name":"DY",      "line":2,"color":ROOT.kBlue},\
+    {"histo":h_tt,    "name":"TTJets","line":2,"color":ROOT.kRed},\
     #{"histo":h_tt_f,  "name":"TTJets Fall15",  "line":4,"color":ROOT.kMagenta},\
-    #{"histo":h_w,     "name":"WJets Spring15", "line":2,"color":ROOT.kGreen},\
-    {"histo":h_data,   "name":"Data Run2016B",   "line":2,"color":ROOT.kBlack},\
+    {"histo":h_w,     "name":"WJets", "line":2,"color":ROOT.kGreen},\
+    #{"histo":h_data,   "name":"Data Run2016B",   "line":2,"color":ROOT.kBlack},\
     ]
 
-    path = "/afs/hephy.at/user/e/easilar/www/METPhiCorr/plots/80X/" 
+    path = "/afs/hephy.at/user/e/easilar/www/METPhiCorr/MCMoriond2017_8025/plots/" 
     if not os.path.exists(path):
       os.makedirs(path)
     cb = ROOT.TCanvas("cb","cb",600,600,600,600)

@@ -1,4 +1,6 @@
 #include "MetTools/MetPhiCorrections/plugins/metPhiCorrInfoWriter.h"
+//#include "DataFormats/METReco/interface/PFMET.h"
+#include "DataFormats/PatCandidates/interface/MET.h"
 #include "DataFormats/TrackReco/interface/Track.h"
 #include "DataFormats/TrackReco/interface/TrackFwd.h"
 #include "DataFormats/ParticleFlowCandidate/interface/PFCandidate.h"
@@ -7,6 +9,7 @@
 #include "DataFormats/Common/interface/Association.h"
 #include "TLorentzVector.h"
 #include <string>
+
 
 std::string namePostFix (int varType) {
 
@@ -35,9 +38,12 @@ metPhiCorrInfoWriter::metPhiCorrInfoWriter( const edm::ParameterSet & cfg ):
   verticesToken_ ( consumes< reco::VertexCollection >(vertices_) ),
   pflow_ ( cfg.getUntrackedParameter< edm::InputTag >("srcPFlow") ),
   pflowToken_ ( consumes< edm::View<reco::Candidate> >(pflow_) ),
+  //metToken_ (consumes< edm::View<pat::MET> > (cfg.getParameter<edm::InputTag>("met"))),
   moduleLabel_(cfg.getParameter<std::string>("@module_label"))
 {
   edm::Service<TFileService> fs;
+
+  metToken_ = consumes<edm::View<pat::MET> >(cfg.getParameter<edm::InputTag>("met"));
 
   cfgCorrParameters_ = cfg.getParameter<std::vector<edm::ParameterSet> >("parameters");
 //  etaNBins_.clear();
@@ -111,23 +117,39 @@ void metPhiCorrInfoWriter::analyze( const edm::Event& evt, const edm::EventSetup
 
   edm::Handle< edm::View<reco::Candidate> > particleFlow;
   evt.getByToken( pflowToken_, particleFlow );
+//MET
+  edm::Handle<edm::View<pat::MET> > metHandle;
+  evt.getByToken(metToken_, metHandle);
+  const pat::MET& met = (*metHandle)[0];
+
+  //edm::Handle<reco::PFMETCollection> MET; 
+  //reco::PFMETCollection::const_iterator met; 
+  //evt.getByToken(metToken_, MET); 
+  //const reco::PFMETCollection* metColl = MET.product(); 
+  //met = metColl->begin();
+  //edm::Handle<edm::View<pat::MET> > metHandle;
+  //evt.getByToken(metToken_, metHandle);
+  //const pat::MET& met = (*metHandle)[0];
+  double met_pt;
+  met_pt = met.pt();
+  std::cout<<"YeHU MET PT :"<<met_pt<<std::endl;
 /////////
-  TLorentzVector mu1;
-  TLorentzVector mu2;
-  TLorentzVector Z;
-  const reco::Candidate& p1 = particleFlow->at(0);
-  const reco::Candidate& p2 = particleFlow->at(1);
-  double zmass=0;
-  //std::cout<<"HEYYYY:"<<std::endl;
-  if (abs(p1.pdgId())==13 and abs(p2.pdgId())==13 ) {
-   mu1.SetPtEtaPhiM(p1.pt(),p1.eta(),p1.phi(),p1.mass()) ;
-   mu2.SetPtEtaPhiM(p2.pt(),p2.eta(),p2.phi(),p2.mass()) ;
-   Z = mu1+mu2;
-  }
-  zmass=Z.M();
+// TLorentzVector mu1;
+// TLorentzVector mu2;
+// TLorentzVector Z;
+// const reco::Candidate& p1 = particleFlow->at(0);
+// const reco::Candidate& p2 = particleFlow->at(1);
+// double zmass=0;
+// //std::cout<<"HEYYYY:"<<std::endl;
+// if (abs(p1.pdgId())==13 and abs(p2.pdgId())==13 ) {
+//  mu1.SetPtEtaPhiM(p1.pt(),p1.eta(),p1.phi(),p1.mass()) ;
+//  mu2.SetPtEtaPhiM(p2.pt(),p2.eta(),p2.phi(),p2.mass()) ;
+//  Z = mu1+mu2;
+// }
+// zmass=Z.M();
   //std::cout<<"HEYYYY:"<<zmass<<std::endl;
 ////
-  if (fabs(zmass-91.2)<15 and p1.charge()*p2.charge()<0) { //zmass window start
+//  if (fabs(zmass-91.2)<15 and p1.charge()*p2.charge()<0) { //zmass window start
   for (unsigned i = 0; i < particleFlow->size(); ++i) {
     const reco::Candidate& c = particleFlow->at(i);
     for (unsigned j=0; j<type_.size(); j++) {
@@ -148,7 +170,7 @@ void metPhiCorrInfoWriter::analyze( const edm::Event& evt, const edm::EventSetup
       }
     }
   }
-  } //Zmass window end
+//  } //Zmass window end
   for (std::vector<edm::ParameterSet>::const_iterator v = cfgCorrParameters_.begin(); v!=cfgCorrParameters_.end(); v++) {
     unsigned j=v-cfgCorrParameters_.begin();
 //    std::cout<<"j "<<j<<" "<<v->getParameter<std::string>("name")<<" varType "<<varType_[j]<<" counts "<<counts_[j]<<" sumPt "<<sumPt_[j]<<" nvtx "<<ngoodVertices<<" "<<MEx_[j]<<" "<<MEy_[j]<<std::endl;

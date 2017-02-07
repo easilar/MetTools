@@ -12,11 +12,14 @@
 #include "DataFormats/ParticleFlowCandidate/interface/PFCandidateFwd.h"
 #include "DataFormats/VertexReco/interface/Vertex.h"
 #include "DataFormats/VertexReco/interface/VertexFwd.h"
+#include "DataFormats/PatCandidates/interface/MET.h"
 
 #include <string>
 #include <vector>
 #include <TProfile.h>
 #include <TH2F.h>
+
+//using namespace pat;
 
 class metPhiCorrInfoWriter : public edm::EDAnalyzer {
 public:
@@ -27,6 +30,8 @@ private:
   edm::EDGetTokenT< std::vector<reco::Vertex> >     verticesToken_;
   edm::InputTag pflow_;
   edm::EDGetTokenT< edm::View<reco::Candidate> >    pflowToken_;
+  edm::EDGetTokenT<edm::View<pat::MET> > metToken_;
+
 
   void analyze( const edm::Event& , const edm::EventSetup& );
   std::string moduleLabel_;

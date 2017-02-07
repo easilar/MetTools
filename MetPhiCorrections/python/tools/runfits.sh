@@ -22,9 +22,12 @@
 #./fits.sh Data_D_80X "/afs/hephy.at/data/easilar01/MET/METPhiCorr/Data/Run2016D/all_D.root"  "/afs/hephy.at/user/e/easilar/www/METPhiCorr/Data_80X/D_fix_GT/" sumPt
 #./fits.sh Data_E_80X "/afs/hephy.at/data/easilar01/MET/METPhiCorr/Data/Run2016E/all_E.root"  "/afs/hephy.at/user/e/easilar/www/METPhiCorr/Data_80X/E_fix_GT/" sumPt
 #./fits.sh Data_F_80X "/afs/hephy.at/data/easilar01/MET/METPhiCorr/Data/Run2016F/all_F.root"  "/afs/hephy.at/user/e/easilar/www/METPhiCorr/Data_80X/F_fix_GT/" sumPt
-./fits.sh Data_G_80X "/afs/hephy.at/data/easilar01/MET/METPhiCorr/Data/Run2016G/lumi_updated/all_G.root"  "/afs/hephy.at/user/e/easilar/www/METPhiCorr/Data_80X/G_fix_GT_lumi_Updated/" sumPt
+#./fits.sh Data_G_80X "/afs/hephy.at/data/easilar01/MET/METPhiCorr/Data/Run2016G/lumi_updated/all_G.root"  "/afs/hephy.at/user/e/easilar/www/METPhiCorr/reRECO/Data_80X/G_fix_GT_lumi_Updated/" sumPt
+#./fits.sh Data_H_80X "/afs/hephy.at/data/easilar01/MET/METPhiCorr/Data/Run2016G/lumi_updated/all_G.root"  "/afs/hephy.at/user/e/easilar/www/METPhiCorr/reRECO/Data_80X/G_fix_GT_lumi_Updated/" sumPt
 
-#./fits.sh MC_DY_80X "/afs/hephy.at/data/easilar01/MET/METPhiCorr/MC/80X/DY/all_DY.root"  "/afs/hephy.at/user/e/easilar/www/METPhiCorr/MC_80X/DY/" sumPt
-#./fits.sh MC_TTJets_80X "/afs/hephy.at/data/easilar01/MET/METPhiCorr/MC/80X/TTJets/all_TTJets.root"  "/afs/hephy.at/user/e/easilar/www/METPhiCorr/MC_80X/TTJets/" sumPt
-#./fits.sh MC_WJets_80X "/afs/hephy.at/data/easilar01/MET/METPhiCorr/MC/80X/WJets/all_WJets.root"  "/afs/hephy.at/user/e/easilar/www/METPhiCorr/MC_80X/WJets/" sumPt
+./fits_sumPt.sh MC_DY_sumPT_80X "/data/easilar/METPhiCorr/RootFiles/MC_80X/all_DY.root"  "/afs/hephy.at/user/e/easilar/www/METPhiCorr/MCMoriond2017_8025/DY/" sumPt
+./fits.sh MC_DY_multiplicity_80X "/data/easilar/METPhiCorr/RootFiles/MC_80X/all_DY.root"  "/afs/hephy.at/user/e/easilar/www/METPhiCorr/MCMoriond2017_8025/DY/" multiplicity
+./fits_ngoodVertices.sh MC_DY_ngoodVertices_80X "/data/easilar/METPhiCorr/RootFiles/MC_80X/all_DY.root"  "/afs/hephy.at/user/e/easilar/www/METPhiCorr/MCMoriond2017_8025/DY/" ngoodVertices
+#./fits.sh MC_TTJets_80X "/data/easilar/METPhiCorr/RootFiles/MC_80X/all_TTJets.root"  "/afs/hephy.at/user/e/easilar/www/METPhiCorr/MCMoriond2017_8025/TTJets/" sumPt
+#./fits.sh MC_WJets_80X  "/data/easilar/METPhiCorr/RootFiles/MC_80X/all_WJets.root"  "/afs/hephy.at/user/e/easilar/www/METPhiCorr/MCMoriond2017_8025/WJets/" sumPt
 
