@@ -41,8 +41,8 @@ metPhiCorrInfoWriter::metPhiCorrInfoWriter( const edm::ParameterSet & cfg ):
   verticesToken_ ( consumes< reco::VertexCollection >(vertices_) ),
   pflow_ ( cfg.getUntrackedParameter< edm::InputTag >("srcPFlow") ),
   pflowToken_ ( consumes< edm::View<reco::Candidate> >(pflow_) ),
-  //metToken_ (consumes< edm::View<pat::MET >> (cfg.getParameter<edm::InputTag>("mets"))),
-  metToken_ (consumes<pat::METCollection>(cfg.getParameter<edm::InputTag>("mets"))),
+  metToken_ (consumes< edm::View<pat::MET >> (cfg.getUntrackedParameter<edm::InputTag>("mets"))),
+  //metToken_ (consumes<pat::METCollection>(cfg.getParameter<edm::InputTag>("mets"))),
   moduleLabel_(cfg.getParameter<std::string>("@module_label"))
 {
   edm::Service<TFileService> fs;
@@ -96,15 +96,16 @@ metPhiCorrInfoWriter::metPhiCorrInfoWriter( const edm::ParameterSet & cfg ):
 void metPhiCorrInfoWriter::analyze( const edm::Event& evt, const edm::EventSetup& setup) {
 
   //MET
-  //edm::Handle<edm::View<pat::MET>> metHandle;
-  //evt.getByToken(metToken_, metHandle);
-  //const pat::MET& met = (*metHandle)[0];
-  edm::Handle<pat::METCollection> mets;
+  edm::Handle<edm::View<pat::MET>> mets;
   evt.getByToken(metToken_, mets);
-  const pat::MET &met = mets->front();
+  const pat::MET& met = (*mets)[0];
+  //edm::Handle<pat::METCollection> mets;
+  //edm::Handle<pat::MET> mets;
+  //evt.getByToken(metToken_, mets);
+  //const pat::MET &met = mets->front();
   double met_pt;
   met_pt = met.pt();
-  std::cout<<"YeHU MET PT :"<<met_pt<<std::endl;
+  //std::cout<<"YeHU MET PT :"<<met_pt<<std::endl;
 
   //get primary vertices
   edm::Handle< reco::VertexCollection > hpv;
@@ -150,6 +151,7 @@ void metPhiCorrInfoWriter::analyze( const edm::Event& evt, const edm::EventSetup
   //std::cout<<"HEYYYY:"<<zmass<<std::endl;
 ////
 //  if (fabs(zmass-91.2)<15 and p1.charge()*p2.charge()<0) { //zmass window start
+  if (met_pt > 30 ) { //metPT cut 
   for (unsigned i = 0; i < particleFlow->size(); ++i) {
     const reco::Candidate& c = particleFlow->at(i);
     for (unsigned j=0; j<type_.size(); j++) {
@@ -170,6 +172,7 @@ void metPhiCorrInfoWriter::analyze( const edm::Event& evt, const edm::EventSetup
       }
     }
   }
+}
 //  } //Zmass window end
   for (std::vector<edm::ParameterSet>::const_iterator v = cfgCorrParameters_.begin(); v!=cfgCorrParameters_.end(); v++) {
     unsigned j=v-cfgCorrParameters_.begin();

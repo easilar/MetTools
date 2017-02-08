@@ -30,9 +30,9 @@ private:
   edm::EDGetTokenT< std::vector<reco::Vertex> >     verticesToken_;
   edm::InputTag pflow_;
   edm::EDGetTokenT< edm::View<reco::Candidate> >    pflowToken_;
-  edm::EDGetTokenT<edm::View<pat::METCollection> > metToken_;
+  //edm::EDGetTokenT<edm::View<pat::METCollection> > metToken_;
 
-  //edm::EDGetTokenT<edm::View<pat::MET> > metToken_;
+  edm::EDGetTokenT<edm::View<pat::MET> > metToken_;
 
   void analyze( const edm::Event& , const edm::EventSetup& );
   std::string moduleLabel_;
