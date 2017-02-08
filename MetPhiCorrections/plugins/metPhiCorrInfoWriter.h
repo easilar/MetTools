@@ -19,7 +19,7 @@
 #include <TProfile.h>
 #include <TH2F.h>
 
-//using namespace pat;
+using namespace pat;
 
 class metPhiCorrInfoWriter : public edm::EDAnalyzer {
 public:

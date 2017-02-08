@@ -1,15 +1,18 @@
-#include "MetTools/MetPhiCorrections/plugins/metPhiCorrInfoWriter.h"
-//#include "DataFormats/METReco/interface/PFMET.h"
-#include "DataFormats/PatCandidates/interface/MET.h"
+#include "DataFormats/METReco/interface/PFMET.h"
 #include "DataFormats/TrackReco/interface/Track.h"
 #include "DataFormats/TrackReco/interface/TrackFwd.h"
 #include "DataFormats/ParticleFlowCandidate/interface/PFCandidate.h"
 #include "CommonTools/UtilAlgos/interface/TFileService.h"
 #include "DataFormats/Common/interface/View.h"
 #include "DataFormats/Common/interface/Association.h"
+#include "DataFormats/PatCandidates/interface/MET.h"
+#include "DataFormats/Candidate/interface/Candidate.h"
+#include "MetTools/MetPhiCorrections/plugins/metPhiCorrInfoWriter.h"
 #include "TLorentzVector.h"
 #include <string>
-
+//
+//
+using namespace pat;
 
 std::string namePostFix (int varType) {
 
@@ -38,12 +41,12 @@ metPhiCorrInfoWriter::metPhiCorrInfoWriter( const edm::ParameterSet & cfg ):
   verticesToken_ ( consumes< reco::VertexCollection >(vertices_) ),
   pflow_ ( cfg.getUntrackedParameter< edm::InputTag >("srcPFlow") ),
   pflowToken_ ( consumes< edm::View<reco::Candidate> >(pflow_) ),
-  //metToken_ (consumes< edm::View<pat::MET> > (cfg.getParameter<edm::InputTag>("met"))),
+  metToken_ (consumes< edm::View<pat::MET >> (cfg.getParameter<edm::InputTag>("srcmet"))),
   moduleLabel_(cfg.getParameter<std::string>("@module_label"))
 {
   edm::Service<TFileService> fs;
 
-  metToken_ = consumes<edm::View<pat::MET> >(cfg.getParameter<edm::InputTag>("met"));
+  //metToken_ = consumes<edm::View<pat::MET> >(cfg.getParameter<edm::InputTag>("srcmet"));
 
   cfgCorrParameters_ = cfg.getParameter<std::vector<edm::ParameterSet> >("parameters");
 //  etaNBins_.clear();
@@ -91,6 +94,14 @@ metPhiCorrInfoWriter::metPhiCorrInfoWriter( const edm::ParameterSet & cfg ):
 
 void metPhiCorrInfoWriter::analyze( const edm::Event& evt, const edm::EventSetup& setup) {
 
+  //MET
+  edm::Handle<edm::View<pat::MET>> metHandle;
+  evt.getByToken(metToken_, metHandle);
+  const pat::MET& met = (*metHandle)[0];
+  double met_pt;
+  met_pt = met.pt();
+  std::cout<<"YeHU MET PT :"<<met_pt<<std::endl;
+
   //get primary vertices
   edm::Handle< reco::VertexCollection > hpv;
   try {
@@ -117,22 +128,7 @@ void metPhiCorrInfoWriter::analyze( const edm::Event& evt, const edm::EventSetup
 
   edm::Handle< edm::View<reco::Candidate> > particleFlow;
   evt.getByToken( pflowToken_, particleFlow );
-//MET
-  edm::Handle<edm::View<pat::MET> > metHandle;
-  evt.getByToken(metToken_, metHandle);
-  const pat::MET& met = (*metHandle)[0];
 
-  //edm::Handle<reco::PFMETCollection> MET; 
-  //reco::PFMETCollection::const_iterator met; 
-  //evt.getByToken(metToken_, MET); 
-  //const reco::PFMETCollection* metColl = MET.product(); 
-  //met = metColl->begin();
-  //edm::Handle<edm::View<pat::MET> > metHandle;
-  //evt.getByToken(metToken_, metHandle);
-  //const pat::MET& met = (*metHandle)[0];
-  double met_pt;
-  met_pt = met.pt();
-  std::cout<<"YeHU MET PT :"<<met_pt<<std::endl;
 /////////
 // TLorentzVector mu1;
 // TLorentzVector mu2;
