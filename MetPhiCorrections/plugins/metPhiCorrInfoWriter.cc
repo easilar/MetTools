@@ -41,7 +41,8 @@ metPhiCorrInfoWriter::metPhiCorrInfoWriter( const edm::ParameterSet & cfg ):
   verticesToken_ ( consumes< reco::VertexCollection >(vertices_) ),
   pflow_ ( cfg.getUntrackedParameter< edm::InputTag >("srcPFlow") ),
   pflowToken_ ( consumes< edm::View<reco::Candidate> >(pflow_) ),
-  metToken_ (consumes< edm::View<pat::MET >> (cfg.getParameter<edm::InputTag>("srcmet"))),
+  //metToken_ (consumes< edm::View<pat::MET >> (cfg.getParameter<edm::InputTag>("mets"))),
+  metToken_ (consumes<pat::METCollection>(cfg.getParameter<edm::InputTag>("mets"))),
   moduleLabel_(cfg.getParameter<std::string>("@module_label"))
 {
   edm::Service<TFileService> fs;
@@ -95,9 +96,12 @@ metPhiCorrInfoWriter::metPhiCorrInfoWriter( const edm::ParameterSet & cfg ):
 void metPhiCorrInfoWriter::analyze( const edm::Event& evt, const edm::EventSetup& setup) {
 
   //MET
-  edm::Handle<edm::View<pat::MET>> metHandle;
-  evt.getByToken(metToken_, metHandle);
-  const pat::MET& met = (*metHandle)[0];
+  //edm::Handle<edm::View<pat::MET>> metHandle;
+  //evt.getByToken(metToken_, metHandle);
+  //const pat::MET& met = (*metHandle)[0];
+  edm::Handle<pat::METCollection> mets;
+  evt.getByToken(metToken_, mets);
+  const pat::MET &met = mets->front();
   double met_pt;
   met_pt = met.pt();
   std::cout<<"YeHU MET PT :"<<met_pt<<std::endl;
