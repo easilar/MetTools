@@ -151,7 +151,7 @@ void metPhiCorrInfoWriter::analyze( const edm::Event& evt, const edm::EventSetup
   //std::cout<<"HEYYYY:"<<zmass<<std::endl;
 ////
 //  if (fabs(zmass-91.2)<15 and p1.charge()*p2.charge()<0) { //zmass window start
-  if (met_pt > 30 ) { //metPT cut 
+  if (met_pt < 30 ) { //metPT cut 
   for (unsigned i = 0; i < particleFlow->size(); ++i) {
     const reco::Candidate& c = particleFlow->at(i);
     for (unsigned j=0; j<type_.size(); j++) {
